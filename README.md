@@ -24,41 +24,6 @@ The public release supports the following methods:
 - `adakv`: AdaKV-style per-head adaptive budget with floor capacity.
 - `championkv`: ChampionKV attention-max-driven head budget allocation.
 
-## Repository Structure
-
-```text
-ChampionKV/
-|-- README.md
-|-- LICENSE
-|-- requirements.txt
-|-- KV_Cache_Utils/                 # Source-tree import compatibility package
-|-- src/
-|   `-- KV_Cache_Utils/
-|       |-- kv_cache_compression_utils.py  # Core KV compression algorithms
-|       |-- llama_model.py                 # LLaMA forward overrides
-|       |-- mistral_model.py               # Mistral forward overrides
-|       |-- monkeypatch.py                 # Runtime Transformers patching
-|       |-- quantcache.py                  # Optional KV cache quantization support
-|       `-- minference.py                  # Optional inference helper
-|-- scripts/
-|   |-- run_longbench.py
-|   |-- run_ruler.py
-|   |-- run_needle_in_haystack.py
-|   |-- eval_longbench.py
-|   |-- eval_ruler.py
-|   |-- metrics.py
-|   `-- exp_scripts/
-|       |-- LongBench/run_longbench.sh
-|       |-- Ruler/run_ruler.sh
-|       `-- Needle/run_needle.sh
-|-- figures/
-|   `-- plot_ruler.py
-|-- results/
-|   `-- README.md
-`-- tests/
-    `-- test_open_source_hygiene.py
-```
-
 ## Installation
 
 ```bash
@@ -70,53 +35,6 @@ pip install -r requirements.txt
 ## Quick Start
 
 Use local model paths or Hugging Face model identifiers through `--model_path` / `--model_name`. The `/path/to/...` values below are placeholders, not required directory names.
-
-### LongBench
-
-```bash
-python scripts/run_longbench.py \
-    --method championkv \
-    --model_path /path/to/Llama-3.1-8B-Instruct \
-    --data_file /path/to/LongBench/narrativeqa.jsonl \
-    --dataset narrativeqa \
-    --max_capacity_prompts 512 \
-    --window_size 8 \
-    --allocate_strategy pyramid \
-    --attn_implementation flash_attention_2 \
-    --save_dir ./results_longbench
-```
-
-### RULER
-
-```bash
-python scripts/run_ruler.py \
-    --method championkv \
-    --model_path /path/to/Llama-3.1-8B-Instruct \
-    --data_file /path/to/RULER/task.jsonl \
-    --dataset niah_single_1 \
-    --max_capacity_prompts 512 \
-    --window_size 8 \
-    --allocate_strategy pyramid \
-    --attn_implementation flash_attention_2 \
-    --save_dir ./results_ruler
-```
-
-### Needle-in-a-Haystack
-
-```bash
-python scripts/run_needle_in_haystack.py \
-    --method championkv \
-    --model_name /path/to/Llama-3.1-8B-Instruct \
-    --model_provider LLaMA3 \
-    --max_capacity_prompts 512 \
-    --window_size 8 \
-    --allocate_strategy pyramid \
-    --s_len 1000 \
-    --e_len 32000 \
-    --step 1000
-```
-
-The legacy Needle argument `--max_capacity_prompt` remains accepted as an alias for `--max_capacity_prompts`.
 
 ## Key Parameters
 
