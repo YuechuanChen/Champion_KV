@@ -1,0 +1,12 @@
+accelerate
+datasets
+numpy
+pandas
+matplotlib
+tqdm
+rouge_score
+fuzzywuzzy
+jieba
+modelscope
+
+transformers=4.44.1
